@@ -21,12 +21,6 @@
 - If a message contains Arabic or Persian characters, it applies RTL styling.  
 - Ensures better text alignment without affecting code blocks.  
 
-## 🛠️ Development  
-Want to improve or customize it? Follow these steps:  
-1. Fork this repository 🍴  
-2. Make your changes ✍️  
-3. Submit a pull request 📬  
-
 ## 👤 Author  
 Developed by **Ali Mohamed** 🧑‍💻  
 
