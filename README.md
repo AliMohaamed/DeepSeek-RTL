@@ -21,19 +21,11 @@
 - If a message contains Arabic or Persian characters, it applies RTL styling.  
 - Ensures better text alignment without affecting code blocks.  
 
-## 🖼️ Screenshots  
-| Before | After |
-|--------|-------|
-| ![Before](icons/before.png) | ![After](icons/after.png) |
-
 ## 🛠️ Development  
 Want to improve or customize it? Follow these steps:  
 1. Fork this repository 🍴  
 2. Make your changes ✍️  
 3. Submit a pull request 📬  
-
-## 📜 License  
-This project is licensed under the MIT License.  
 
 ## 👤 Author  
 Developed by **Ali Mohamed** 🧑‍💻  
