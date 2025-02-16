@@ -34,27 +34,31 @@ function applyRTLDirection(element) {
     }
 }
 
-// Scan the page for eligible elements and apply RTL adjustments
+// Function to process all eligible elements on the page
 function processPageForRTLAdjustments() {
     if (!isTargetWebsite()) return;
 
-    const selector = [...ELIGIBLE_RTL_TAGS, "UL", "OL", "LI"].join(", ");
-    document.querySelectorAll(selector).forEach(el => applyRTLDirection(el));
+    requestAnimationFrame(() => {
+        const selector = [...ELIGIBLE_RTL_TAGS, "UL", "OL", "LI"].join(", ");
+        document.querySelectorAll(selector).forEach(el => applyRTLDirection(el));
+    });
 }
 
-// Observe DOM changes to dynamically adjust new elements
+// MutationObserver to detect dynamic content changes
 const domMutationObserver = new MutationObserver(mutations => {
     if (!isTargetWebsite()) return;
 
-    mutations.forEach(mutation => {
-        mutation.addedNodes.forEach(node => {
-            if (node.nodeType === 1 && !isElementInsideCodeBlock(node)) {
-                if ([...ELIGIBLE_RTL_TAGS, "UL", "OL", "LI"].includes(node.tagName)) {
-                    applyRTLDirection(node);
+    requestAnimationFrame(() => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+                if (node.nodeType === 1 && !isElementInsideCodeBlock(node)) {
+                    if ([...ELIGIBLE_RTL_TAGS, "UL", "OL", "LI"].includes(node.tagName)) {
+                        applyRTLDirection(node);
+                    }
+                    node.querySelectorAll([...ELIGIBLE_RTL_TAGS, "UL", "OL", "LI"].join(", "))
+                        .forEach(child => applyRTLDirection(child));
                 }
-                node.querySelectorAll([...ELIGIBLE_RTL_TAGS, "UL", "OL", "LI"].join(", "))
-                    .forEach(child => applyRTLDirection(child));
-            }
+            });
         });
     });
 });
@@ -63,8 +67,9 @@ const domMutationObserver = new MutationObserver(mutations => {
 if (isTargetWebsite()) {
     domMutationObserver.observe(document.body, { childList: true, subtree: true });
 
-    // Run scan every 2 seconds to ensure new responses are detected
-    setInterval(processPageForRTLAdjustments, 2000);
-    
+    // Run scan every 1 second to ensure new responses are detected
+    setInterval(processPageForRTLAdjustments, 1000);
+
+    // Initial run to process already loaded elements
     processPageForRTLAdjustments();
 }
