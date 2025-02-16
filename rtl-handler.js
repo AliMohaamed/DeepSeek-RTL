@@ -61,6 +61,10 @@ const domMutationObserver = new MutationObserver(mutations => {
 
 // Initialize the script if on the target page
 if (isTargetWebsite()) {
-    domMutationObserver.observe(document.documentElement, { childList: true, subtree: true });
+    domMutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    // Run scan every 2 seconds to ensure new responses are detected
+    setInterval(processPageForRTLAdjustments, 2000);
+    
     processPageForRTLAdjustments();
 }
